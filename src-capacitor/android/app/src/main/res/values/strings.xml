@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Quasar Counter</string>
+    <string name="title_activity_main">Quasar Counter</string>
+    <string name="package_name">mydevlab.ru</string>
+    <string name="custom_url_scheme">mydevlab.ru</string>
+</resources>
