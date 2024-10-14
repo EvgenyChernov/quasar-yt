@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-img
-        src="p1.jpg"
+        src="p2.jpg"
         class="fit absolute"
     />
     <q-page-container>
