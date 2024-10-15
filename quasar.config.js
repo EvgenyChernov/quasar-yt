@@ -22,7 +22,7 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
       
-      'axios',
+      
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -97,9 +97,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: [
-        'LocalStorage',
-      ]
+      plugins: []
     },
 
     // animations: 'all', // --- includes all animations
@@ -188,7 +186,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'quasar-counter'
+        appId: 'quasar-moneyballs'
       }
     },
 

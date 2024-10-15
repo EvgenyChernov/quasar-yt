@@ -1,4 +1,4 @@
-# Quasar Counter (quasar-counter)
+# MoneyBalls (quasar-moneyballs)
 
 A Quasar Project
 
