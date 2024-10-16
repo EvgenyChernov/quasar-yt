@@ -1,0 +1,9 @@
+<template>
+  <q-page class="flex flex-center">
+    Sittings
+  </q-page>
+</template>
+
+<script setup lang="ts">
+
+</script>
