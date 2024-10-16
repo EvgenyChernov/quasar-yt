@@ -10,7 +10,7 @@
             <q-item-label>{{ item.name }}</q-item-label>
           </q-item-section>
           <q-item-section side>
-            {{ currencify(item.amount) }}
+            {{ useCurrencify(item.amount) }}
           </q-item-section>
         </q-item>
       </q-list>
@@ -21,6 +21,7 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
+import { useCurrencify } from "src/use/useCurrencify"
 
 const entries = ref([
   {
@@ -46,14 +47,7 @@ const entries = ref([
 ])
 
 
-function currencify(amount: number) {
- //
-   const amountFormatted = amount.toLocaleString('ru-RU', {
-     minimumFractionDigits: 2,
-     maximumFractionDigits: 2
-   })
-  return amountFormatted
-}
+
 
 </script>
 
