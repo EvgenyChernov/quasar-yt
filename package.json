@@ -2,7 +2,7 @@
   "name": "quasar-moneyballs",
   "version": "0.0.1",
   "description": "A Quasar Project",
-  "productName": "MoneyBalls",
+  "productName": "Мой Кашылок",
   "author": "evgen <evgenycher89@gmail.com>",
   "private": true,
   "scripts": {

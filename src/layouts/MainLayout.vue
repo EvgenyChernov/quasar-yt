@@ -14,7 +14,7 @@
         <q-toolbar-title>
           <div class="absolute-center	">
             <q-icon name="account_balance_wallet"/>
-            Moneyballs
+            Мой Кашылок
           </div>
         </q-toolbar-title>
 
@@ -34,7 +34,7 @@
             class="text-black"
           header
         >
-          Navigations
+          Навигация
         </q-item-label>
 
         <NavLink
@@ -62,12 +62,12 @@ defineOptions({
 
 const navLinks: EssentialLinkProps[] = [
   {
-    title: 'Entries',
+    title: 'Записи',
     icon: 'savings',
     link: '/'
   },
   {
-    title: 'Sittings',
+    title: 'Настройки',
     icon: 'settings',
     link: '/settings'
   }
