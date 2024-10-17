@@ -5,21 +5,35 @@
         bordered
         separator
       >
-        <q-item v-for="item in entries" :key="item.id">
-          <q-item-section
-            class="text-weight-bold"
-            :class="useAmountColorClass(item.amount)"
-          >
-            <q-item-label>{{ item.name }}</q-item-label>
-          </q-item-section>
-          <q-item-section
-            class="text-weight-bold"
-            :class="useAmountColorClass(item.amount)"
-            side
-          >
-            {{ useCurrencify(item.amount) }}
-          </q-item-section>
-        </q-item>
+        <q-slide-item
+          v-for="item in entries" :key="item.id"
+          @right="onEntrySlideRight($event, item.id)"
+          left-color="positive"
+          right-color="negative"
+        >
+<!--          <template v-slot:left>-->
+<!--            <q-icon name="done"/>-->
+<!--          </template>-->
+          <template v-slot:right>
+            <q-icon name="delete"/>
+          </template>
+
+          <q-item>
+            <q-item-section
+              class="text-weight-bold"
+              :class="useAmountColorClass(item.amount)"
+            >
+              <q-item-label>{{ item.name }}</q-item-label>
+            </q-item-section>
+            <q-item-section
+              class="text-weight-bold"
+              :class="useAmountColorClass(item.amount)"
+              side
+            >
+              {{ useCurrencify(item.amount) }}
+            </q-item-section>
+          </q-item>
+        </q-slide-item>
       </q-list>
     </div>
     <q-footer
@@ -71,11 +85,12 @@
 </template>
 
 <script setup lang="ts">
-
+import { useQuasar, uid } from 'quasar'
 import {ref, computed, reactive} from "vue";
 import {useCurrencify} from "src/use/useCurrencify"
 import {useAmountColorClass} from "src/use/AmountColorClass";
-import {uid} from 'quasar'
+
+const $q = useQuasar()
 
 const entries = ref([
   {
@@ -106,8 +121,9 @@ const balance = computed(() => {
   }, 0)
 })
 
-const nameRef = ref<string>(null)
+/// добавление строки
 
+const nameRef = ref<string>(null)
 
 const addEntryFormDefault = {
   name: '',
@@ -133,6 +149,33 @@ const addEntry = () => {
   entries.value.push(newEntry)
   addEntryFormReset()
 }
+
+// удаление
+const onEntrySlideRight = ({reset}, id) => {
+  $q.dialog({
+    title: 'Удаление записи',
+    message: 'Вы действительно хотите удалить запись?',
+    cancel: {
+      label: 'Отмена',
+      color: 'positive',
+    },
+    ok: {
+      label: 'Удалить',
+      color: 'negative'
+    },
+    persistent: true
+  }).onOk(() => {
+   deleteEntry(id)
+  }).onCancel(() => {
+    reset()
+  })
+}
+
+const deleteEntry = (id) => {
+  const index = entries.value.findIndex(entry => entry.id === id)
+  entries.value.splice(index, 1)
+}
+
 
 </script>
 
