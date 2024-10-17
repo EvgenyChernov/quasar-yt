@@ -178,6 +178,10 @@ const onEntrySlideRight = ({reset}, item) => {
 const deleteEntry = (id) => {
   const index = entries.value.findIndex(entry => entry.id === id)
   entries.value.splice(index, 1)
+  $q.notify({
+    message: 'Запись удалена',
+    position: 'top',
+  })
 }
 
 
