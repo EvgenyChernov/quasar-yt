@@ -7,13 +7,13 @@
       >
         <q-slide-item
           v-for="item in entries" :key="item.id"
-          @right="onEntrySlideRight($event, item.id)"
+          @right="onEntrySlideRight($event, item)"
           left-color="positive"
           right-color="negative"
         >
-<!--          <template v-slot:left>-->
-<!--            <q-icon name="done"/>-->
-<!--          </template>-->
+          <!--          <template v-slot:left>-->
+          <!--            <q-icon name="done"/>-->
+          <!--          </template>-->
           <template v-slot:right>
             <q-icon name="delete"/>
           </template>
@@ -85,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar, uid } from 'quasar'
+import {useQuasar, uid} from 'quasar'
 import {ref, computed, reactive} from "vue";
 import {useCurrencify} from "src/use/useCurrencify"
 import {useAmountColorClass} from "src/use/AmountColorClass";
@@ -151,10 +151,13 @@ const addEntry = () => {
 }
 
 // удаление
-const onEntrySlideRight = ({reset}, id) => {
+const onEntrySlideRight = ({reset}, item) => {
   $q.dialog({
     title: 'Удаление записи',
-    message: 'Вы действительно хотите удалить запись?',
+    message: `Вы действительно хотите удалить запись?
+    <div class="text-weight-bold q-mt-md ${useAmountColorClass(item.amount)}"
+    >Изменится на ${useCurrencify(item.amount)}</div>
+    `,
     cancel: {
       label: 'Отмена',
       color: 'positive',
@@ -163,9 +166,10 @@ const onEntrySlideRight = ({reset}, id) => {
       label: 'Удалить',
       color: 'negative'
     },
-    persistent: true
+    persistent: true,
+    html: true
   }).onOk(() => {
-   deleteEntry(id)
+    deleteEntry(item.id)
   }).onCancel(() => {
     reset()
   })
