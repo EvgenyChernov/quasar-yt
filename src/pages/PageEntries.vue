@@ -47,7 +47,7 @@
         </div>
         <div class="col">
           <q-input
-            v-model="addEntryForm.amount"
+            v-model.number="addEntryForm.amount"
             input-class="text-right"
             outlined
             type="number"
@@ -74,7 +74,7 @@
 import {ref, computed, reactive} from "vue";
 import {useCurrencify} from "src/use/useCurrencify"
 import {useAmountColorClass} from "src/use/AmountColorClass";
-import { uid } from 'quasar'
+import {uid} from 'quasar'
 
 const entries = ref([
   {
@@ -105,18 +105,28 @@ const balance = computed(() => {
   }, 0)
 })
 
-const addEntryForm = reactive({
+const addEntryFormDefault = {
   name: '',
   amount: null,
+}
+
+const addEntryForm = reactive({
+  ...addEntryFormDefault
 })
 
+const addEntryFromReset = () => {
+  Object.assign(addEntryForm, addEntryFormDefault)
+}
+
 const addEntry = () => {
-  const newEntry = {
-    id: uid(),
-    name: addEntryForm.name,
-    amount:addEntryForm.amount,
-  }
+  // const newEntry = {
+  //   id: uid(),
+  //   name: addEntryForm.name,
+  //   amount:addEntryForm.amount,
+  // }
+  const newEntry = Object.assign({}, addEntryForm, {id: uid()})
   entries.value.push(newEntry)
+  addEntryFromReset()
 }
 
 </script>
