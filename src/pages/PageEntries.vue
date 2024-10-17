@@ -39,6 +39,7 @@
         <div class="col">
           <q-input
             v-model="addEntryForm.name"
+            ref="nameRef"
             outlined
             placeholder="Название"
             bg-color="white"
@@ -105,6 +106,9 @@ const balance = computed(() => {
   }, 0)
 })
 
+const nameRef = ref<string>(null)
+
+
 const addEntryFormDefault = {
   name: '',
   amount: null,
@@ -114,8 +118,9 @@ const addEntryForm = reactive({
   ...addEntryFormDefault
 })
 
-const addEntryFromReset = () => {
+const addEntryFormReset = () => {
   Object.assign(addEntryForm, addEntryFormDefault)
+  nameRef.value.focus()
 }
 
 const addEntry = () => {
@@ -126,7 +131,7 @@ const addEntry = () => {
   // }
   const newEntry = Object.assign({}, addEntryForm, {id: uid()})
   entries.value.push(newEntry)
-  addEntryFromReset()
+  addEntryFormReset()
 }
 
 </script>
