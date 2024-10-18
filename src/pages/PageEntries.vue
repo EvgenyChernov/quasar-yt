@@ -6,7 +6,7 @@
         separator
       >
         <q-slide-item
-          v-for="item in entries" :key="item.id"
+          v-for="item in storeEntries.entries" :key="item.id"
           @right="onEntrySlideRight($event, item)"
           left-color="positive"
           right-color="negative"
@@ -39,17 +39,17 @@
     <q-footer
       class="bg-transparent"
     >
-      <div class="row q-mb-sm q-px-md q-py-sm q-col-gutter-sm shadow-up-3">
+      <div class="row  q-px-md q-py-sm shadow-up-3">
         <div class="col text-grey-7 text-h6">Баланс:</div>
         <div
-          :class="useAmountColorClass(balance)"
+          :class="useAmountColorClass(storeEntries.balance)"
           class="col text-h6 text-right"
-        >{{ useCurrencify(balance) }}
+        >{{ useCurrencify(storeEntries.balance) }}
         </div>
       </div>
       <q-form
-        @submit="addEntry"
-        class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary">
+        @submit="addEntryFormSubmit"
+        class="row q-px-sm q-py-sm bg-primary q-gutter-x-sm">
         <div class="col">
           <q-input
             v-model="addEntryForm.name"
@@ -85,41 +85,15 @@
 </template>
 
 <script setup lang="ts">
-import {useQuasar, uid} from 'quasar'
-import {ref, computed, reactive} from "vue";
+import {useQuasar} from 'quasar'
+import {ref, reactive} from "vue";
 import {useCurrencify} from "src/use/useCurrencify"
 import {useAmountColorClass} from "src/use/AmountColorClass";
+import {useStoreEntries} from "src/stores/storeEntries"
+
+const storeEntries = useStoreEntries()
 
 const $q = useQuasar()
-
-const entries = ref([
-  {
-    id: 'id1',
-    name: 'Зарплата',
-    amount: 50000.99
-  },
-  {
-    id: 'id2',
-    name: 'Аренда',
-    amount: -3000
-  },
-  {
-    id: 'id3',
-    name: 'Телефон',
-    amount: 1200
-  },
-  {
-    id: 'id4',
-    name: 'Неизвестно',
-    amount: 0
-  },
-])
-
-const balance = computed(() => {
-  return entries.value.reduce((accumulator, {amount}) => {
-    return accumulator + amount;
-  }, 0)
-})
 
 /// добавление строки
 
@@ -139,14 +113,8 @@ const addEntryFormReset = () => {
   nameRef.value.focus()
 }
 
-const addEntry = () => {
-  // const newEntry = {
-  //   id: uid(),
-  //   name: addEntryForm.name,
-  //   amount:addEntryForm.amount,
-  // }
-  const newEntry = Object.assign({}, addEntryForm, {id: uid()})
-  entries.value.push(newEntry)
+const addEntryFormSubmit = () =>{
+  storeEntries.addEntry(addEntryForm)
   addEntryFormReset()
 }
 
@@ -169,21 +137,11 @@ const onEntrySlideRight = ({reset}, item) => {
     persistent: true,
     html: true
   }).onOk(() => {
-    deleteEntry(item.id)
+    storeEntries.deleteEntry(item.id)
   }).onCancel(() => {
     reset()
   })
 }
-
-const deleteEntry = (id) => {
-  const index = entries.value.findIndex(entry => entry.id === id)
-  entries.value.splice(index, 1)
-  $q.notify({
-    message: 'Запись удалена',
-    position: 'top',
-  })
-}
-
 
 </script>
 
