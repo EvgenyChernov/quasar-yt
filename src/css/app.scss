@@ -1,9 +1,20 @@
+.letter-spacing-none {
+  letter-spacing: 0;
+}
+
+.q-popup-edit__buttons {
+  .q-btn {
+    text-transform: none;
+  }
+}
+
 // drawer nav
 .q-drawer {
-  .q-item{
+  .q-item {
     color: black;
     opacity: 0.6;
-    &.q-router-link--exact-active  {
+
+    &.q-router-link--exact-active {
       opacity: 1;
     }
   }

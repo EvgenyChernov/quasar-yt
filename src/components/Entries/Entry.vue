@@ -13,7 +13,26 @@
         class="text-weight-bold"
         :class="useAmountColorClass(item.amount)"
       >
-        <q-item-label>{{ item.name }}</q-item-label>
+          {{ item.name }}
+          <q-popup-edit
+            :model-value="item.name"
+            v-slot="scope"
+            :cover="false"
+            :offset="[16,11]"
+            auto-save
+            label-set="Сохранить"
+            label-cancel="Отмена"
+            anchor="top left"
+            buttons
+          >
+            <q-input
+              input-class="text-weight-bold letter-spacing-none"
+              v-model="scope.value"
+              dense
+              autofocus
+              @keyup.enter="scope.set"
+            />
+          </q-popup-edit>
       </q-item-section>
       <q-item-section
         class="text-weight-bold"
