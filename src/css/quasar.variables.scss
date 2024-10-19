@@ -25,4 +25,4 @@ $info      : #4FC3F7;   // Нежный голубой для информаци
 $warning   : #FFD54F;   // Спокойный желтый для предупреждений
 
 // кастомные переменные
-$primary-dark: darken($primary, 8)
+$primary-dark: adjust-color($primary, $lightness: -8%);
