@@ -96,8 +96,10 @@ import {useAmountColorClass} from "src/use/AmountColorClass";
 import {useCurrencify} from "src/use/useCurrencify";
 import {useQuasar} from "quasar";
 import vSelectAll from "src/directives/directiveSelectorAll"
+import {useStoreSetting} from "stores/storeSetting";
 
-const storeEntries = useStoreEntries()
+const storeEntries = useStoreEntries(),
+  storeSetting = useStoreSetting()
 const $q = useQuasar()
 
 
@@ -116,6 +118,11 @@ const onEntrySlideLeft = ({reset}) => {
 
 // удаление
 const onEntrySlideRight = ({reset}) => {
+  if (storeSetting.settings.promptToDelete) promptToDelete(reset)
+  else storeEntries.deleteEntry(props.item.id)
+}
+
+const promptToDelete = reset => {
   $q.dialog({
     title: 'Удаление записи',
     message: `Вы действительно хотите удалить запись?
@@ -138,6 +145,7 @@ const onEntrySlideRight = ({reset}) => {
     reset()
   })
 }
+
 
 const onNameUpdate = value => {
   storeEntries.updateEntry(props.item.id, {name: value})
