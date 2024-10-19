@@ -1,17 +1,24 @@
 <template>
   <q-slide-item
+    @left="onEntrySlideLeft"
     @right="onEntrySlideRight"
     left-color="positive"
     right-color="negative"
+    :class="{ 'bg-grey-2': item.paid }"
   >
     <template v-slot:right>
       <q-icon name="delete"/>
     </template>
-
+    <template v-slot:left>
+      <q-icon name="done_all"/>
+    </template>
     <q-item>
       <q-item-section
         class="text-weight-bold"
-        :class="useAmountColorClass(item.amount)"
+        :class="[
+          useAmountColorClass(item.amount),
+          {'text-strike': item.paid }
+          ]"
       >
         {{ item.name }}
         <q-popup-edit
@@ -37,7 +44,10 @@
       </q-item-section>
       <q-item-section
         class="text-weight-bold"
-        :class="useAmountColorClass(item.amount)"
+        :class="[
+          useAmountColorClass(item.amount),
+          {'text-strike': item.paid }
+          ]"
         side
       >
         {{ useCurrencify(item.amount) }}
@@ -86,6 +96,11 @@ const props = defineProps({
   }
 })
 
+const onEntrySlideLeft = ({reset}) => {
+  storeEntries.updateEntry(props.item.id, {paid: !props.item.paid})
+  reset()
+}
+
 // удаление
 const onEntrySlideRight = ({reset}) => {
   $q.dialog({
@@ -112,11 +127,11 @@ const onEntrySlideRight = ({reset}) => {
 }
 
 const onNameUpdate = value => {
-  storeEntries.updateEntry(props.item.id, { name: value })
+  storeEntries.updateEntry(props.item.id, {name: value})
 }
 
 const onAmountUpdate = value => {
-  storeEntries.updateEntry(props.item.id, { amount: value })
+  storeEntries.updateEntry(props.item.id, {amount: value})
 }
 
 
