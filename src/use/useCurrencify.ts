@@ -1,3 +1,7 @@
+import {useStoreSetting} from "stores/storeSetting";
+
+const storeSetting = useStoreSetting();
+
 export function useCurrencify(amount: number) {
   //
 
@@ -5,7 +9,7 @@ export function useCurrencify(amount: number) {
   if (amount > 0) posNegSymbol = '+'
   else if (amount < 0) posNegSymbol = '-'
 
-  const currencySymbol = "₽",
+  const currencySymbol = storeSetting.settings.currencySymbol,
     amountPositive = Math.abs(amount),
     amountFormatted = amountPositive.toLocaleString('ru-RU', {
       minimumFractionDigits: 2,
