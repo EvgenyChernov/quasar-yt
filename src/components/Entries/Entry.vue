@@ -12,9 +12,11 @@
     <template v-slot:left>
       <q-icon name="done_all"/>
     </template>
-    <q-item>
+    <q-item
+      class="row"
+    >
       <q-item-section
-        class="text-weight-bold"
+        class="text-weight-bold col"
         :class="[
           useAmountColorClass(item.amount),
           {'text-strike': item.paid }
@@ -44,7 +46,7 @@
         </q-popup-edit>
       </q-item-section>
       <q-item-section
-        class="text-weight-bold relative-position"
+        class="text-weight-bold relative-position col"
         :class="[
           useAmountColorClass(item.amount),
           ]"
@@ -62,7 +64,8 @@
           auto-save
           label-set="Сохранить"
           label-cancel="Отмена"
-          anchor="top left"
+          anchor="top right"
+          self="top right"
           buttons
         >
           <q-input
