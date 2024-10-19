@@ -10,12 +10,12 @@ export const useStoreSetting = defineStore('setting', () => {
       promptToDelete: true,
       showRunningBalance: true,
       currencySymbol: '₽',
-      darkMode: false,
+      darkMode: true,
     })
 
   watch(()=> settings.darkMode, value => {
     Dark.set(value)
-  })
+  },{immediate: true})
 
   //getters
 
