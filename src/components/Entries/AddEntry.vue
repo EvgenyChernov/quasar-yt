@@ -10,6 +10,7 @@
         placeholder="Название"
         bg-color="white"
         dense
+        v-select-all
       />
     </div>
     <div class="col">
@@ -22,6 +23,7 @@
         placeholder="Сумма"
         bg-color="white"
         dense
+        v-select-all
       />
     </div>
     <div class="col col-auto">
@@ -37,6 +39,7 @@
 <script setup lang="ts">
 /// добавление строки
 import {useStoreEntries} from "stores/storeEntries";
+import vSelectAll from "src/directives/directiveSelectorAll"
 
 const storeEntries = useStoreEntries()
 import {reactive, ref} from "vue";
