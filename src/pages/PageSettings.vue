@@ -73,11 +73,6 @@
             </q-item-section>
           </q-item>
         </q-list>
-
-        <div class="q-px-sm q-mt-sm">
-          Your selection is: <strong>{{ color }}</strong>
-        </div>
-
       </q-list>
     </div>
   </q-page>
