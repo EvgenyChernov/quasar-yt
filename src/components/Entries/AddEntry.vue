@@ -8,7 +8,7 @@
         ref="nameRef"
         outlined
         placeholder="Название"
-        bg-color="white"
+        :bg-color="useLightOrDark('white', 'black')"
         dense
         v-select-all
       />
@@ -21,7 +21,7 @@
         type="number"
         step="0.01"
         placeholder="Сумма"
-        bg-color="white"
+        :bg-color="useLightOrDark('white', 'black')"
         dense
         v-select-all
       />
@@ -38,11 +38,12 @@
 
 <script setup lang="ts">
 /// добавление строки
-import {useStoreEntries} from "stores/storeEntries";
+import {useStoreEntries} from "stores/storeEntries"
 import vSelectAll from "src/directives/directiveSelectorAll"
 
 const storeEntries = useStoreEntries()
-import {reactive, ref} from "vue";
+import {reactive, ref} from "vue"
+import {useLightOrDark} from "src/use/useLightOrDark";
 
 const nameRef = ref<string>(null)
 
