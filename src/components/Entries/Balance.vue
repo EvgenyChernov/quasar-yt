@@ -1,5 +1,8 @@
 <template>
-  <div class="row  q-px-md q-py-sm shadow-up-3 items-center">
+  <div
+    class="row q-px-md q-py-sm items-center"
+    :class="useLightOrDark('shadow-up-3', 'bg-black' )"
+  >
     <div class="col text-grey-7 text-h6">Баланс:</div>
     <div
       :class="useAmountColorClass(storeEntries.balance)"
@@ -30,6 +33,7 @@
 import {useStoreEntries} from "stores/storeEntries";
 import {useAmountColorClass} from "src/use/AmountColorClass";
 import {useCurrencify} from "src/use/useCurrencify";
+import {useLightOrDark} from "src/use/useLightOrDark";
 
 const storeEntries = useStoreEntries()
 </script>
