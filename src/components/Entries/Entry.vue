@@ -4,10 +4,11 @@
     @right="onEntrySlideRight"
     left-color="positive"
     right-color="negative"
-    :class="[
-      { 'bg-grey-2': item.paid && !$q.dark.isActive},
-      { 'bg-grey-8': item.paid && $q.dark.isActive}
-      ]"
+    :class="
+      !item.paid
+       ? useLightOrDark('bg-white','bg-black')
+       : useLightOrDark('bg-grey-2','bg-gray-10')
+    "
   >
     <template v-slot:right>
       <q-icon name="delete"/>
@@ -110,6 +111,7 @@
 <script setup lang="ts">
 import {useStoreEntries} from "stores/storeEntries";
 import {useAmountColorClass} from "src/use/AmountColorClass";
+import {useLightOrDark} from "src/use/useLightOrDark";
 import {useCurrencify} from "src/use/useCurrencify";
 import {useQuasar} from "quasar";
 import vSelectAll from "src/directives/directiveSelectorAll"
