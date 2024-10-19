@@ -10,6 +10,7 @@ export const useStoreSetting = defineStore('setting', () => {
       promptToDelete: true,
       showRunningBalance: true,
       currencySymbol: '₽',
+      darkMode: false,
     })
 
   //getters
