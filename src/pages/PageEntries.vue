@@ -6,8 +6,7 @@
       />
       <q-list
         v-else
-        bordered
-        separator
+        class="entries"
       >
         <Sortable
           @end="storeEntries.sortEnd"

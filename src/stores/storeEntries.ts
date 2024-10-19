@@ -69,8 +69,8 @@ export const useStoreEntries = defineStore('entries', () => {
 
   const sortEnd = ({oldIndex, newIndex}) => {
     const movedEntry = entries.value[oldIndex]
-      entries.value.splice(oldIndex, 1 )
-      entries.value.splice(newIndex, 1, movedEntry)
+    entries.value.splice(oldIndex, 1 )
+    entries.value.splice(newIndex, 0, movedEntry)
   }
 
 
