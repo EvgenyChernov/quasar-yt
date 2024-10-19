@@ -13,26 +13,27 @@
         class="text-weight-bold"
         :class="useAmountColorClass(item.amount)"
       >
-          {{ item.name }}
-          <q-popup-edit
-            :model-value="item.name"
-            v-slot="scope"
-            :cover="false"
-            :offset="[16,11]"
-            auto-save
-            label-set="Сохранить"
-            label-cancel="Отмена"
-            anchor="top left"
-            buttons
-          >
-            <q-input
-              input-class="text-weight-bold letter-spacing-none"
-              v-model="scope.value"
-              dense
-              autofocus
-              @keyup.enter="scope.set"
-            />
-          </q-popup-edit>
+        {{ item.name }}
+        <q-popup-edit
+          @save="onNameUpdate"
+          :model-value="item.name"
+          v-slot="scope"
+          :cover="false"
+          :offset="[16,11]"
+          auto-save
+          label-set="Сохранить"
+          label-cancel="Отмена"
+          anchor="top left"
+          buttons
+        >
+          <q-input
+            input-class="text-weight-bold letter-spacing-none"
+            v-model="scope.value"
+            dense
+            autofocus
+            @keyup.enter="scope.set"
+          />
+        </q-popup-edit>
       </q-item-section>
       <q-item-section
         class="text-weight-bold"
@@ -40,6 +41,28 @@
         side
       >
         {{ useCurrencify(item.amount) }}
+        <q-popup-edit
+          @save="onAmountUpdate"
+          :model-value="item.amount"
+          v-slot="scope"
+          :cover="false"
+          :offset="[16,11]"
+          auto-save
+          label-set="Сохранить"
+          label-cancel="Отмена"
+          anchor="top left"
+          buttons
+        >
+          <q-input
+            v-model.number="scope.value"
+            @keyup.enter="scope.set"
+            input-class="text-weight-bold letter-spacing-none text-right"
+            type="number"
+            step="0.01"
+            autofocus
+            dense
+          />
+        </q-popup-edit>
       </q-item-section>
     </q-item>
   </q-slide-item>
@@ -87,4 +110,14 @@ const onEntrySlideRight = ({reset}) => {
     reset()
   })
 }
+
+const onNameUpdate = value => {
+  storeEntries.updateEntry(props.item.id, { name: value })
+}
+
+const onAmountUpdate = value => {
+  storeEntries.updateEntry(props.item.id, { amount: value })
+}
+
+
 </script>
