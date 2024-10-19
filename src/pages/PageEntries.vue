@@ -13,6 +13,10 @@
           :list="storeEntries.entries"
           item-key="id"
           tag="div"
+          :options="{
+            handle: '.handle',
+            animation: 150,
+          }"
         >
           <template #item="{element, index}">
             <Entry

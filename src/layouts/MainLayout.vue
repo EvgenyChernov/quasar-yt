@@ -17,7 +17,14 @@
             Мой Кашылок
           </div>
         </q-toolbar-title>
-
+        <q-btn
+          v-if="$route.fullPath === '/'"
+          @click="storeEntries.options.sort = !storeEntries.options.sort"
+          :label="!storeEntries.options.sort? 'Сортировать':'Не сортировать'"
+          flat
+          no-caps
+          dense
+        />
       </q-toolbar>
     </q-header>
 
@@ -55,6 +62,9 @@
 import { ref } from 'vue';
 import { EssentialLinkProps } from 'components/Nav/NavLink.vue';
 import NavLink from "components/Nav/NavLink.vue";
+import {useStoreEntries} from "stores/storeEntries";
+
+const storeEntries = useStoreEntries()
 
 defineOptions({
   name: 'MainLayout'
