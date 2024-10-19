@@ -2,6 +2,17 @@
   letter-spacing: 0;
 }
 
+// темная тема
+
+.body--dark {
+  .bg-primary, .q-layout__section--marginal  {
+    background-color: $primary-dark !important;
+  }
+  .q-drawer {
+    border: none !important;
+  }
+}
+
 .q-popup-edit__buttons {
   .q-btn {
     text-transform: none;
