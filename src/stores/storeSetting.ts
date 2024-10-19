@@ -8,6 +8,7 @@ export const useStoreSetting = defineStore('setting', () => {
 
     const settings = reactive({
       promptToDelete: true,
+      showRunningBalance: true,
     })
 
   //getters

@@ -28,11 +28,19 @@ input::-webkit-inner-spin-button {
 .entries {
   .q-slide-item {
     border: 1px solid rgba(0, 0, 0, 0.12);
+
     &:not(:first-child) {
       margin-top: -1px;
     }
   }
+
   .sortable-ghost {
     opacity: 0;
   }
+
+  .running-balance {
+    right: 11px;
+    bottom: -1px
+  }
 }
+
