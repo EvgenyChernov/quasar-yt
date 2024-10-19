@@ -10,6 +10,7 @@
         separator
       >
         <Sortable
+          @end="storeEntries.sortEnd"
           :list="storeEntries.entries"
           item-key="id"
           tag="div"
