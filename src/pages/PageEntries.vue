@@ -27,6 +27,7 @@
             <Entry
               :key="element.id"
               :item="element"
+              :index="index"
             />
           </template>
         </Sortable>

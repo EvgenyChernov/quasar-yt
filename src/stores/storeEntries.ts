@@ -48,6 +48,22 @@ export const useStoreEntries = defineStore('entries', () => {
     }, 0)
   })
 
+  const runningBalances = computed(() => {
+    let runningBalances = [],
+      currentRunningBalance = 0;
+    if (entries.value.length) {
+      entries.value.forEach(entry => {
+        let entryAmount = entry.amount ? entry.amount : 0;
+        currentRunningBalance += entryAmount;
+        runningBalances.push(currentRunningBalance);
+      })
+    }
+    return runningBalances
+  })
+
+
+  // actions
+
   const addEntry = addEntryForm => {
     const newEntry = Object.assign({}, addEntryForm, {id: uid(), paid: false})
     entries.value.push(newEntry)
@@ -69,7 +85,7 @@ export const useStoreEntries = defineStore('entries', () => {
 
   const sortEnd = ({oldIndex, newIndex}) => {
     const movedEntry = entries.value[oldIndex]
-    entries.value.splice(oldIndex, 1 )
+    entries.value.splice(oldIndex, 1)
     entries.value.splice(newIndex, 0, movedEntry)
   }
 
@@ -94,5 +110,6 @@ export const useStoreEntries = defineStore('entries', () => {
     deleteEntry,
     updateEntry,
     sortEnd,
+    runningBalances
   }
 })

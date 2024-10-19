@@ -44,7 +44,7 @@
         </q-popup-edit>
       </q-item-section>
       <q-item-section
-        class="text-weight-bold"
+        class="text-weight-bold relative-position"
         :class="[
           useAmountColorClass(item.amount),
           ]"
@@ -81,10 +81,10 @@
           outline
           size="9px"
           dense
-          :class="useAmountColorClass(13)"
+          :class="useAmountColorClass(storeEntries.runningBalances[index])"
           class="running-balance absolute-bottom-right"
         >
-          {{ useCurrencify(23.23) }}
+          {{ useCurrencify(storeEntries.runningBalances[index]) }}
         </q-chip>
       </q-item-section>
       <q-item-section
@@ -118,7 +118,10 @@ const props = defineProps({
   item: {
     type: Object,
     required: true,
-
+  },
+  index: {
+    type: Number,
+    required: true,
   }
 })
 
