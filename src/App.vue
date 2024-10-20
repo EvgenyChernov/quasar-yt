@@ -6,9 +6,12 @@
 import {useStoreSetting} from "stores/storeSetting";
 import {useStoreEntries} from "stores/storeEntries";
 import {onMounted} from "vue";
+import {useRouter} from "vue-router";
 
-const storeSetting = useStoreSetting();
-const storeEntries = useStoreEntries();
+const storeSetting = useStoreSetting(),
+  storeEntries = useStoreEntries(),
+  router = useRouter();
+
 defineOptions({
   name: 'App'
 });
@@ -16,6 +19,10 @@ defineOptions({
 onMounted(() => {
   storeSetting.loadSettings()
   storeEntries.loadEntries()
+
+  window.electron.ipcRenderer.on('show-settings', (_event, value) => {
+    router.push('/settings')
+  });
 })
 
 
