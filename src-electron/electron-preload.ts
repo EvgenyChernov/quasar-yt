@@ -27,11 +27,15 @@
  *   }
  * }
  */
-const { contextBridge, ipcRenderer } = require('electron');
+import { contextBridge, ipcRenderer } from 'electron'
 
-contextBridge.exposeInMainWorld('electron', {
-  ipcRenderer: {
-    on: (channel, func) => ipcRenderer.on(channel, func),
-    send: (channel, ...args) => ipcRenderer.send(channel, ...args)
+// expose ipcRenderer to the renderer process securely
+contextBridge.exposeInMainWorld(
+  'ipcRenderer', {
+    on: (message, func) => {
+      return ipcRenderer.on(message, () => {
+        func()
+      })
+    }
   }
-});
+)

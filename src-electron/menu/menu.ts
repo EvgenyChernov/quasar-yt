@@ -25,14 +25,15 @@ export const menuTemplate = [
   {
     label: 'File',
     submenu: [
-      isMac ? { role: 'close' } : { role: 'quit' }
+      isMac ? { role: 'close' } : { role: 'quit' },
+      {
+        label: 'Настройки',
+        accelerator: 'Cmd+,', // Cmd + ,
+        click()  {
+          mainWindow.webContents.send('show-settings');
+        }
+      }
     ]
-  },
-  {
-    label: 'Настройки',
-    click()  {
-      mainWindow.webContents.send('show-settings');
-    }
   },
   // { role: 'editMenu' }
   {
