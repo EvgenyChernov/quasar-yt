@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {computed, reactive, ref, watch} from "vue";
-import {uid, Dark} from "quasar";
+import {uid, Dark, LocalStorage} from "quasar";
 
 export const useStoreSetting = defineStore('setting', () => {
 
@@ -10,18 +10,24 @@ export const useStoreSetting = defineStore('setting', () => {
       promptToDelete: true,
       showRunningBalance: true,
       currencySymbol: '₽',
-      darkMode: true,
+      darkMode: false,
     })
 
   watch(()=> settings.darkMode, value => {
     Dark.set(value)
   },{immediate: true})
 
+  watch(settings,()=> {
+    saveSettings(settings)
+  })
+
   //getters
 
 
   //actions
-
+  const saveSettings = () => {
+    LocalStorage.setItem("settings", settings)
+  }
 
   // helpers
 
