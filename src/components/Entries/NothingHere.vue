@@ -1,7 +1,7 @@
 <template>
   <div class="text-center q-pt-xl">
     <q-icon
-      name="savings"
+      name="wallet"
       size="100px"
       :color="useLightOrDark('grey-4', 'grey-9')"
     />
