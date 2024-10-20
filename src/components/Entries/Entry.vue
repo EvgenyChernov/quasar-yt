@@ -9,6 +9,7 @@
        ? useLightOrDark('bg-white','bg-black')
        : useLightOrDark('bg-grey-2','bg-gray-10')
     "
+    :id="`id-${item.id}`"
   >
     <template v-slot:right>
       <q-icon name="delete"/>

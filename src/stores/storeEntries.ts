@@ -1,37 +1,37 @@
 import {defineStore} from "pinia";
-import {computed, reactive, ref, watch} from "vue";
+import {computed, reactive, ref, watch, nextTick} from "vue";
 import {uid, Notify, LocalStorage} from "quasar";
 
 export const useStoreEntries = defineStore('entries', () => {
 
   const entries = ref([
-    {
-      id: 'id1',
-      name: 'Зарплата',
-      amount: 50000.99,
-      paid: false
-    },
-    {
-      id: 'id2',
-      name: 'Аренда',
-      amount: -3000,
-      paid: false
-    },
-    {
-      id: 'id3',
-      name: 'Телефон',
-      amount: 1200,
-      paid: false
-    },
-    {
-      id: 'id4',
-      name: 'Неизвестно',
-      amount: 0,
-      paid: false
-    },
+    // {
+    //   id: 'id1',
+    //   name: 'Зарплата',
+    //   amount: 50000.99,
+    //   paid: false
+    // },
+    // {
+    //   id: 'id2',
+    //   name: 'Аренда',
+    //   amount: -3000,
+    //   paid: false
+    // },
+    // {
+    //   id: 'id3',
+    //   name: 'Телефон',
+    //   amount: 1200,
+    //   paid: false
+    // },
+    // {
+    //   id: 'id4',
+    //   name: 'Неизвестно',
+    //   amount: 0,
+    //   paid: false
+    // },
   ])
 
-  watch(entries.value,()=> {
+  watch(entries.value, () => {
     saveEntries()
   })
 
@@ -76,6 +76,7 @@ export const useStoreEntries = defineStore('entries', () => {
   const deleteEntry = id => {
     const index = getEntryIndexById(id)
     entries.value.splice(index, 1)
+    removeSlideItemIfExists(id)
     Notify.create({
       message: 'Запись удалена',
       position: 'top',
@@ -107,6 +108,19 @@ export const useStoreEntries = defineStore('entries', () => {
 
   const getEntryIndexById = id => {
     return entries.value.findIndex(entry => entry.id === id)
+  }
+
+  const removeSlideItemIfExists = (entryId) => {
+    // исправление: при удалении (после сортировки)
+    // иногда элемент слайда не удаляется
+    // из дома. это удалит слайд
+    // элемент из домена, если он еще существует
+    // (после удаления записи из массива записей)
+    nextTick(() => {
+      const slideItem = document.querySelector(`#id-${entryId}`)
+      if (slideItem) slideItem.remove()
+    })
+
   }
 
   return {
