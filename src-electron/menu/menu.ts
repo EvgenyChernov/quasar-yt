@@ -1,4 +1,5 @@
 import {app, shell} from "electron";
+import {mainWindow} from "app/src-electron/electron-main";
 
 const isMac = process.platform === 'darwin'
 
@@ -26,6 +27,12 @@ export const menuTemplate = [
     submenu: [
       isMac ? { role: 'close' } : { role: 'quit' }
     ]
+  },
+  {
+    label: 'Настройки',
+    click()  {
+      mainWindow.webContents.send('show-settings');
+    }
   },
   // { role: 'editMenu' }
   {

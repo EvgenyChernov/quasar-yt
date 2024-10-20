@@ -8,7 +8,7 @@ const platform = process.platform || os.platform(),
   menu = Menu.buildFromTemplate(menuTemplate)
 
 
-let mainWindow: BrowserWindow | undefined;
+export let mainWindow: BrowserWindow | undefined;
 
 function createWindow() {
   /**
