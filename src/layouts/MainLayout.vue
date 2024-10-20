@@ -76,7 +76,7 @@ defineOptions({
 const navLinks: EssentialLinkProps[] = [
   {
     title: 'Записи',
-    icon: 'savings',
+    icon: 'wallet',
     link: '/'
   },
   {
