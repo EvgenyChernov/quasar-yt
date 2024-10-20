@@ -6,18 +6,18 @@ export const useStoreSetting = defineStore('setting', () => {
 
   //state
 
-    const settings = reactive({
-      promptToDelete: true,
-      showRunningBalance: true,
-      currencySymbol: '₽',
-      darkMode: false,
-    })
+  const settings = reactive({
+    promptToDelete: true,
+    showRunningBalance: true,
+    currencySymbol: '₽',
+    darkMode: false,
+  })
 
-  watch(()=> settings.darkMode, value => {
+  watch(() => settings.darkMode, value => {
     Dark.set(value)
-  },{immediate: true})
+  }, {immediate: true})
 
-  watch(settings,()=> {
+  watch(settings, () => {
     saveSettings(settings)
   })
 
@@ -29,16 +29,21 @@ export const useStoreSetting = defineStore('setting', () => {
     LocalStorage.setItem("settings", settings)
   }
 
+  const loadSettings = () => {
+    const savedSettings = LocalStorage.getItem("settings")
+    if (savedSettings) Object.assign(settings, savedSettings)
+  }
+
   // helpers
 
   return {
-  //state
-    settings
+    //state
+    settings,
 
-  //getters
+    //getters
 
 
-  //actions
-
+    //actions
+    loadSettings,
   }
 })
