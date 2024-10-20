@@ -7,10 +7,12 @@ import {useStoreSetting} from "stores/storeSetting";
 import {useStoreEntries} from "stores/storeEntries";
 import {onMounted} from "vue";
 import {useRouter} from "vue-router";
+import {useQuasar} from "quasar";
 
 const storeSetting = useStoreSetting(),
   storeEntries = useStoreEntries(),
-  router = useRouter();
+  router = useRouter(),
+  $q = useQuasar()
 
 defineOptions({
   name: 'App'
@@ -20,9 +22,16 @@ onMounted(() => {
   storeSetting.loadSettings()
   storeEntries.loadEntries()
 
-  window.electron.ipcRenderer.on('show-settings', (_event, value) => {
-    router.push('/settings')
-  });
+
+  if ($q.platform.is.electron){
+    if (window.electron && window.electron.ipcRenderer) {
+      window.electron.ipcRenderer.on('show-settings', (_event, value) => {
+        router.push('/settings');
+      });
+    } else {
+      console.error('ipcRenderer is not available');
+    }
+  }
 })
 
 

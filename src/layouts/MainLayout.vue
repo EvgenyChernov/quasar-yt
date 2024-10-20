@@ -40,7 +40,7 @@
     >
       <q-list>
         <q-item-label
-            class="text-black"
+          class="text-black"
           header
         >
           Навигация
@@ -51,23 +51,62 @@
           :key="link.title"
           v-bind="link"
         />
+        <q-item
+          v-if="$q.platform.is.electron"
+          @click="quitApp"
+          clickable
+          tag="a"
+          class="text-black absolute-bottom"
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon name="power_settings_new"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Quit</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { EssentialLinkProps } from 'components/Nav/NavLink.vue';
+import {ref} from 'vue';
+import {EssentialLinkProps} from 'components/Nav/NavLink.vue';
 import NavLink from "components/Nav/NavLink.vue";
 import {useStoreEntries} from "stores/storeEntries";
 import {useLightOrDark} from "src/use/useLightOrDark";
+import {useQuasar} from 'quasar'
+import {useAmountColorClass} from "src/use/AmountColorClass";
+import {useCurrencify} from "src/use/useCurrencify";
 
-const storeEntries = useStoreEntries()
+const $q = useQuasar(),
+  storeEntries = useStoreEntries()
+
+const quitApp = () => {
+  $q.dialog({
+    message: 'Вы действительно хотите выйти?',
+    cancel: {
+      label: 'Отмена',
+      color: 'positive',
+    },
+    ok: {
+      label: 'Выйти',
+      color: 'negative'
+    },
+    persistent: true,
+    html: true
+  }).onOk(() => {
+    console.log('выход')
+  })
+}
 
 defineOptions({
   name: 'MainLayout'
@@ -88,7 +127,7 @@ const navLinks: EssentialLinkProps[] = [
 
 const leftDrawerOpen = ref(false);
 
-function toggleLeftDrawer () {
+function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 </script>

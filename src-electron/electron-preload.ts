@@ -27,15 +27,20 @@
  *   }
  * }
  */
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron';
 
 // expose ipcRenderer to the renderer process securely
-contextBridge.exposeInMainWorld(
-  'ipcRenderer', {
+contextBridge.exposeInMainWorld('electron', {
+  ipcRenderer: {
     on: (message, func) => {
-      return ipcRenderer.on(message, () => {
-        func()
-      })
+      // Передаем обработчик, который будет вызывать func с аргументами события
+      return ipcRenderer.on(message, (event, ...args) => {
+        func(event, ...args);
+      });
+    },
+    send: (channel, data) => {
+      // Функция для отправки сообщений из рендерера в основной процесс
+      ipcRenderer.send(channel, data);
     }
   }
-)
+});
