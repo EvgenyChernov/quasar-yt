@@ -1,18 +1,21 @@
 <template>
-  <router-view />
+  <router-view/>
 </template>
 
 <script setup lang="ts">
 import {useStoreSetting} from "stores/storeSetting";
+import {useStoreEntries} from "stores/storeEntries";
 import {onMounted} from "vue";
 
 const storeSetting = useStoreSetting();
+const storeEntries = useStoreEntries();
 defineOptions({
   name: 'App'
 });
 
-onMounted(()=>{
+onMounted(() => {
   storeSetting.loadSettings()
+  storeEntries.loadEntries()
 })
 
 
