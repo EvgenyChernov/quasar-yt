@@ -9,6 +9,7 @@
     "icons": " icongenie generate -i app-icon.png --skip-trim",
     "dev": "quasar dev",
     "dev:mac": "quasar dev -m electron",
+    "dev:android": "quasar dev -m capacitor -T android",
     "build": "quasar build",
     "build:mac": "quasar build -m electron"
   },
