@@ -104,7 +104,9 @@ const quitApp = () => {
     persistent: true,
     html: true
   }).onOk(() => {
-    console.log('выход')
+    if ($q.platform.is.electron) {
+      window.electron.ipcRenderer.send('quit-app')
+    }
   })
 }
 

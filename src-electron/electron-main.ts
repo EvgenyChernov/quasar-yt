@@ -1,4 +1,4 @@
-import {app, BrowserWindow, Menu} from 'electron';
+import {app, BrowserWindow, Menu, ipcMain} from 'electron';
 import path from 'path';
 import os from 'os';
 import { menuTemplate } from './menu/menu'
@@ -61,3 +61,7 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+ipcMain.on('quit-app', () => {
+  app.quit();
+})
