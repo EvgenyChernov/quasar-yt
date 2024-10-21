@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {computed, reactive, ref, watch, nextTick} from "vue";
-import {uid, Notify, LocalStorage} from "quasar";
-import {collection, onSnapshot, doc, setDoc} from "firebase/firestore";
+import { Notify } from "quasar";
+import {collection, onSnapshot, addDoc, doc, deleteDoc} from "firebase/firestore";
 import {db} from "src/firebase/firebase"
 
 const entriesCollectionRef = collection(db, "entries")
@@ -81,6 +81,7 @@ export const useStoreEntries = defineStore('entries', () => {
 
       querySnapshot.forEach((doc) => {
         let entry = doc.data()
+        entry.id = doc.id
         entriesFB.push(entry)
       });
       entries.value = entriesFB;
@@ -92,15 +93,15 @@ export const useStoreEntries = defineStore('entries', () => {
   }
 
   const addEntry = async addEntryForm => {
-    const newEntry = Object.assign({}, addEntryForm, {id: uid(), paid: false})
-    await setDoc(doc(entriesCollectionRef, newEntry.id), newEntry);
+    const newEntry = Object.assign({}, addEntryForm, {paid: false})
+    await addDoc(entriesCollectionRef, newEntry);
   }
 
 
-
-  const deleteEntry = id => {
-    const index = getEntryIndexById(id)
-    entries.value.splice(index, 1)
+  const deleteEntry =  async id => {
+    // const index = getEntryIndexById(id)
+    // entries.value.splice(index, 1)
+    await deleteDoc(doc(entriesCollectionRef, id));
     removeSlideItemIfExists(id)
     Notify.create({
       message: 'Запись удалена',
