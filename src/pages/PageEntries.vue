@@ -2,7 +2,7 @@
   <q-page class="">
     <div class="q-pa-md">
       <template
-      v-if="storeEntries.entriesLoaded"
+        v-if="storeEntries.entriesLoaded"
       >
         <transition
           appear
@@ -37,6 +37,15 @@
 
         </q-list>
       </template>
+      <div
+        v-else
+        class="text-center q-pa-xl"
+      >
+        <q-spinner-tail
+          color="primary"
+          size="3em"
+        />
+      </div>
     </div>
     <q-footer
       class="bg-transparent"
