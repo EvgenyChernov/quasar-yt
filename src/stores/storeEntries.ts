@@ -1,6 +1,8 @@
 import {defineStore} from "pinia";
 import {computed, reactive, ref, watch, nextTick} from "vue";
 import {uid, Notify, LocalStorage} from "quasar";
+import {collection, onSnapshot} from "firebase/firestore";
+import {db} from "src/firebase/firebase"
 
 export const useStoreEntries = defineStore('entries', () => {
 
@@ -31,9 +33,11 @@ export const useStoreEntries = defineStore('entries', () => {
     // },
   ])
 
-  watch(entries.value, () => {
-    saveEntries()
-  })
+  const entriesLoaded = ref(false)
+
+  // watch(entries.value, () => {
+  //   saveEntries()
+  // })
 
   const options = reactive({
     sort: false
@@ -68,6 +72,23 @@ export const useStoreEntries = defineStore('entries', () => {
 
   // actions
 
+  const loadEntries = async () => {
+    entriesLoaded.value = false
+    const unsubscribe = onSnapshot(collection(db, "entries"), (querySnapshot) => {
+      let entriesFB = []
+
+      querySnapshot.forEach((doc) => {
+        let entry = doc.data()
+        entriesFB.push(entry)
+      });
+      entries.value = entriesFB;
+      entriesLoaded.value = true
+    });
+
+    // отключение прослушивания данных
+    // unsubscribe()
+  }
+
   const addEntry = addEntryForm => {
     const newEntry = Object.assign({}, addEntryForm, {id: uid(), paid: false})
     entries.value.push(newEntry)
@@ -94,14 +115,9 @@ export const useStoreEntries = defineStore('entries', () => {
     entries.value.splice(newIndex, 0, movedEntry)
   }
 
-  const saveEntries = () => {
-    LocalStorage.setItem("entries", entries.value)
-  }
-
-  const loadEntries = () => {
-    const savedEntries = LocalStorage.getItem("entries")
-    if (savedEntries) Object.assign(entries.value, savedEntries)
-  }
+  // const saveEntries = () => {
+  //   LocalStorage.setItem("entries", entries.value)
+  // }
 
 
   // helpers
@@ -126,6 +142,7 @@ export const useStoreEntries = defineStore('entries', () => {
   return {
     //state
     entries,
+    entriesLoaded,
     options,
 
     //getters
@@ -133,11 +150,11 @@ export const useStoreEntries = defineStore('entries', () => {
     balancePaid,
 
     //actions
+    loadEntries,
     addEntry,
     deleteEntry,
     updateEntry,
     sortEnd,
-    runningBalances,
-    loadEntries
+    runningBalances
   }
 })

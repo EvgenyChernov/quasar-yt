@@ -1,5 +1,5 @@
 /* eslint-env node */
-
+require('dotenv').config()
 /*
  * This file runs in a Node context (it's NOT transpiled by Babel), so use only
  * the ES6 features that are supported by your Node version. https://node.green/
@@ -60,7 +60,7 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: require('dotenv').config().parsed
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -194,7 +194,7 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'quasar-moneyballs'
+        appId: 'quasar-moneymate-0032'
       }
     },
 

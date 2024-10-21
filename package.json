@@ -1,5 +1,5 @@
 {
-  "name": "quasar-moneyballs",
+  "name": "quasar-moneymate-0032",
   "version": "0.0.1",
   "description": "A Quasar Project",
   "productName": "Мой Кашылок",
@@ -11,10 +11,12 @@
     "dev:mac": "quasar dev -m electron",
     "dev:android": "quasar dev -m capacitor -T android",
     "build": "quasar build",
-    "build:mac": "quasar build -m electron"
+    "build:mac": "quasar build -m electron",
+    "build:andrid": "quasar build -m capacitor -T android --ide"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "firebase": "^10.14.1",
     "pinia": "^2.0.11",
     "quasar": "^2.16.0",
     "sortablejs": "^1.15.3",
@@ -27,6 +29,7 @@
     "@quasar/app-vite": "^1.9.0",
     "@types/node": "^20.14.8",
     "autoprefixer": "^10.4.2",
+    "dotenv": "^16.4.5",
     "electron": "^33.0.1",
     "typescript": "~5.5.4"
   },
