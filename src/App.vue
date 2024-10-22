@@ -4,13 +4,13 @@
 
 <script setup lang="ts">
 import {useStoreSetting} from "stores/storeSetting";
-import {useStoreEntries} from "stores/storeEntries";
 import {onMounted} from "vue";
 import {useRouter} from "vue-router";
 import {useQuasar} from "quasar";
+import {useStoreAuth} from "stores/storeAuth";
 
-const storeSetting = useStoreSetting(),
-  storeEntries = useStoreEntries(),
+const storeAuth = useStoreAuth(),
+  storeSetting = useStoreSetting(),
   router = useRouter(),
   $q = useQuasar()
 
@@ -19,8 +19,8 @@ defineOptions({
 });
 
 onMounted(() => {
+  storeAuth.init()
   storeSetting.loadSettings()
-  storeEntries.loadEntries()
 
 
   if ($q.platform.is.electron){
