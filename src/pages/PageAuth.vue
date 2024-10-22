@@ -16,32 +16,36 @@
         </q-tabs>
       </q-card-section>
       <q-card-section>
-        <q-input
-          v-model="credentials.email"
-          class="q-mb-md"
-          :bg-color="useLightOrDark('white', 'dark')"
-          label="Email"
-          type="email"
-          autocomplete="email"
-          filled
-        />
-        <q-input
-          v-model="credentials.password"
-          class="q-mb-md"
-          :bg-color="useLightOrDark('white','dark')"
-          label="Пароль"
-          type="password"
-          autocomplete="password"
-          filled
-        />
-        <q-btn
-          to="/"
-          class="full-width"
-          outline
-          :label="submitButtonTitle"
-          color="white"
-          no-caps
-        />
+        <q-form
+        @submit="formSubmit"
+        >
+          <q-input
+            v-model="credentials.email"
+            class="q-mb-md"
+            :bg-color="useLightOrDark('white', 'dark')"
+            label="Email"
+            type="email"
+            autocomplete="email"
+            filled
+          />
+          <q-input
+            v-model="credentials.password"
+            class="q-mb-md"
+            :bg-color="useLightOrDark('white','dark')"
+            label="Пароль"
+            type="password"
+            autocomplete="password"
+            filled
+          />
+          <q-btn
+            type="submit"
+            class="full-width"
+            outline
+            :label="submitButtonTitle"
+            color="white"
+            no-caps
+          />
+        </q-form>
       </q-card-section>
     </q-card>
   </q-page>
@@ -54,7 +58,6 @@ import ToolbarTitle from "components/Layout/ToolbarTitle.vue";
 
 const tab = ref('login')
 
-
 // submit
 const submitButtonTitle = computed(() => {
   return tab.value === 'login' ? 'Войти' : 'Зарегистрироваться'
@@ -66,5 +69,10 @@ const credentials = reactive({
   email: '',
   password: ''
 })
+
+const formSubmit = () => {
+  console.log('отправили')
+}
+
 
 </script>
