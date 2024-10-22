@@ -102,7 +102,7 @@ const formSubmitSuccess = () => {
   else {
     storeAuth.loginUser(credentials)
   }
-  router.push('/')
+
 
 }
 
