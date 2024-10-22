@@ -12,13 +12,7 @@
           aria-label="Menu"
           @click="toggleLeftDrawer"
         />
-
-        <q-toolbar-title>
-          <div class="absolute-center	">
-            <q-icon name="wallet"/>
-            Мой Кашылок
-          </div>
-        </q-toolbar-title>
+        <ToolbarTitle/>
         <q-btn
           v-if="$route.fullPath === '/'"
           @click="storeEntries.options.sort = !storeEntries.options.sort"
@@ -86,6 +80,7 @@ import {useLightOrDark} from "src/use/useLightOrDark";
 import {useQuasar} from 'quasar'
 import {useAmountColorClass} from "src/use/AmountColorClass";
 import {useCurrencify} from "src/use/useCurrencify";
+import ToolbarTitle from "components/Layout/ToolbarTitle.vue";
 
 const $q = useQuasar(),
   storeEntries = useStoreEntries()
