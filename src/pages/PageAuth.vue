@@ -18,7 +18,7 @@
       <q-card-section>
         <q-input
           class="q-mb-md"
-          bg-color="white"
+          :bg-color="useLightOrDark('white', 'dark')"
           label="Email"
           type="email"
           autocomplete="email"
@@ -26,7 +26,7 @@
         />
         <q-input
           class="q-mb-md"
-          bg-color="white"
+          :bg-color="useLightOrDark('white','dark')"
           label="Пароль"
           type="password"
           autocomplete="password"
@@ -47,6 +47,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
+import {useLightOrDark} from "src/use/useLightOrDark";
 
 const tab = ref('login')
 
