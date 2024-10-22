@@ -63,6 +63,11 @@
 
           <q-item-section>
             <q-item-label>Выйти</q-item-label>
+            <q-item-label
+              v-if="storeAuth.userDetails.email"
+              caption>
+              {{storeAuth.userDetails.email}}
+            </q-item-label>
           </q-item-section>
         </q-item>
         <q-item
