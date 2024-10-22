@@ -69,7 +69,7 @@ const router = useRouter()
 
 // tabs
 
-const tab = ref('register')
+const tab = ref('login')
 
 // submit
 const submitButtonTitle = computed(() => {
@@ -100,7 +100,7 @@ const formSubmitSuccess = () => {
     storeAuth.registerUser(credentials)
   }
   else {
-    console.log('вход')
+    storeAuth.loginUser(credentials)
   }
   router.push('/')
 

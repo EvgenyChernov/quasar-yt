@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {Dialog} from "quasar";
-import {createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {auth} from "src/firebase/firebase";
 
 export const useStoreAuth = defineStore('auth', () => {
@@ -14,15 +14,18 @@ export const useStoreAuth = defineStore('auth', () => {
   const registerUser = ({email, password}) => {
     createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
       const user = userCredential.user;
-      console.log(user)
+      console.log('register user: ', user)
     }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+      showFirebaseError(error.message)
+    });
+  }
 
-      Dialog.create({
-        title: 'Ошибка: ' + errorCode,
-        message: errorMessage,
-      })
+  const loginUser = ({email, password}) => {
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      const user = userCredential.user;
+      console.log('login user: ', user)
+    }).catch((error) => {
+      showFirebaseError(error.message)
     });
   }
 
@@ -31,14 +34,19 @@ export const useStoreAuth = defineStore('auth', () => {
       Dialog.create({
         title: 'Внимание: ',
         message: error,
-      })    }).catch((error) => {
-      Dialog.create({
-        title: 'Ошибка: ',
-        message: error,
       })
+    }).catch((error) => {
+      showFirebaseError(error.message)
     });
   }
+  // helpers
 
+  const showFirebaseError = message => {
+    Dialog.create({
+      title: 'Ошибка: ',
+      message: message,
+    })
+  }
 
   return {
     //state
@@ -49,6 +57,7 @@ export const useStoreAuth = defineStore('auth', () => {
 
     //actions
     registerUser,
+    loginUser,
     logoutUser
   }
 })
