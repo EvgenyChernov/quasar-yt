@@ -49,6 +49,7 @@
         <q-separator spaced/>
 
         <q-item
+          @click="storeAuth.logoutUser"
           to="/auth"
           clickable
           tag="a"
@@ -78,7 +79,7 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label>Quit</q-item-label>
+            <q-item-label>Выйти</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -95,6 +96,7 @@ import {ref} from 'vue';
 import {EssentialLinkProps} from 'components/Nav/NavLink.vue';
 import NavLink from "components/Nav/NavLink.vue";
 import {useStoreEntries} from "stores/storeEntries";
+import {useStoreAuth} from "stores/storeAuth";
 import {useLightOrDark} from "src/use/useLightOrDark";
 import {useQuasar} from 'quasar'
 import {useAmountColorClass} from "src/use/AmountColorClass";
@@ -102,7 +104,8 @@ import {useCurrencify} from "src/use/useCurrencify";
 import ToolbarTitle from "components/Layout/ToolbarTitle.vue";
 
 const $q = useQuasar(),
-  storeEntries = useStoreEntries()
+  storeEntries = useStoreEntries(),
+  storeAuth = useStoreAuth()
 
 const quitApp = () => {
   $q.dialog({

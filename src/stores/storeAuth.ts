@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {Dialog} from "quasar";
-import {createUserWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import {auth} from "src/firebase/firebase";
 
 export const useStoreAuth = defineStore('auth', () => {
@@ -26,6 +26,20 @@ export const useStoreAuth = defineStore('auth', () => {
     });
   }
 
+  const logoutUser = () => {
+    signOut(auth).then(() => {
+      Dialog.create({
+        title: 'Внимание: ',
+        message: error,
+      })    }).catch((error) => {
+      Dialog.create({
+        title: 'Ошибка: ',
+        message: error,
+      })
+    });
+  }
+
+
   return {
     //state
 
@@ -34,6 +48,7 @@ export const useStoreAuth = defineStore('auth', () => {
 
 
     //actions
-    registerUser
+    registerUser,
+    logoutUser
   }
 })
