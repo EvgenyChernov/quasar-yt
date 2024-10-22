@@ -17,7 +17,7 @@
       </q-card-section>
       <q-card-section>
         <q-form
-        @submit="formSubmit"
+          @submit="formSubmit"
         >
           <q-input
             v-model="credentials.email"
@@ -53,8 +53,19 @@
 
 <script setup lang="ts">
 import {computed, reactive, ref} from 'vue'
+import {useRouter} from "vue-router";
+import {useQuasar} from "quasar";
 import {useLightOrDark} from "src/use/useLightOrDark";
 import ToolbarTitle from "components/Layout/ToolbarTitle.vue";
+
+const $q = useQuasar()
+
+
+// router
+
+const router = useRouter()
+
+// tabs
 
 const tab = ref('login')
 
@@ -71,8 +82,26 @@ const credentials = reactive({
 })
 
 const formSubmit = () => {
-  console.log('отправили')
+  if (!credentials.email || !credentials.password) {
+    $q.dialog({
+      title: 'Ошибка',
+      message: 'Пожалуйста введите email и пароль'
+    })
+  }
+  else {
+    formSubmitSuccess()
+  }
 }
 
+const formSubmitSuccess = () => {
+  if (tab.value === 'register') {
+    console.log('регистрация')
+  }
+  else {
+    console.log('вход')
+  }
+  router.push('/')
+
+}
 
 </script>
