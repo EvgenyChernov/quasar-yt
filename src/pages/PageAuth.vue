@@ -57,8 +57,10 @@ import {useRouter} from "vue-router";
 import {useQuasar} from "quasar";
 import {useLightOrDark} from "src/use/useLightOrDark";
 import ToolbarTitle from "components/Layout/ToolbarTitle.vue";
+import {useStoreAuth} from "stores/storeAuth";
 
 const $q = useQuasar()
+const storeAuth = useStoreAuth()
 
 
 // router
@@ -67,7 +69,7 @@ const router = useRouter()
 
 // tabs
 
-const tab = ref('login')
+const tab = ref('register')
 
 // submit
 const submitButtonTitle = computed(() => {
@@ -95,7 +97,7 @@ const formSubmit = () => {
 
 const formSubmitSuccess = () => {
   if (tab.value === 'register') {
-    console.log('регистрация')
+    storeAuth.registerUser(credentials)
   }
   else {
     console.log('вход')
