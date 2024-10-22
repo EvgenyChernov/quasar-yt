@@ -15,6 +15,32 @@
           <q-tab name="register" label="Регистрация"/>
         </q-tabs>
       </q-card-section>
+      <q-card-section>
+        <q-input
+          class="q-mb-md"
+          bg-color="white"
+          label="Email"
+          type="email"
+          autocomplete="email"
+          filled
+        />
+        <q-input
+          class="q-mb-md"
+          bg-color="white"
+          label="Пароль"
+          type="password"
+          autocomplete="password"
+          filled
+        />
+        <q-btn
+          to="/"
+          class="full-width"
+          outline
+          label="Продолжить"
+          color="white"
+          no-caps
+        />
+      </q-card-section>
     </q-card>
   </q-page>
 </template>

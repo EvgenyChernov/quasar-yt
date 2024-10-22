@@ -45,6 +45,25 @@
           :key="link.title"
           v-bind="link"
         />
+
+        <q-separator spaced/>
+
+        <q-item
+          to="/auth"
+          clickable
+          tag="a"
+          class="text-black"
+        >
+          <q-item-section
+            avatar
+          >
+            <q-icon name="logout"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Выйти</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item
           v-if="$q.platform.is.electron"
           @click="quitApp"
