@@ -3,10 +3,20 @@ import {Dialog} from "quasar";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import {auth} from "src/firebase/firebase";
 import {useStoreEntries} from "stores/storeEntries";
+import {reactive} from "vue";
 
 export const useStoreAuth = defineStore('auth', () => {
   //state
 
+  const userDetailsDefault = {
+    id: null,
+    email: null,
+  }
+
+
+  const userDetails = reactive({
+    ...userDetailsDefault
+  })
 
   //getters
 
@@ -18,10 +28,11 @@ export const useStoreAuth = defineStore('auth', () => {
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log('пользователь авторизован', user)
+        userDetails.id = user.uid
+        userDetails.email = user.email
         storeEntries.loadEntries()
       } else {
-        console.log('пользователя нет ')
+        Object.assign(userDetails, userDetailsDefault)
       }
     });
   }
@@ -47,7 +58,7 @@ export const useStoreAuth = defineStore('auth', () => {
         message: error,
       })
     }).catch((error) => {
-      showFirebaseError(error.message)
+      showFirebaseError(error)
     });
   }
   // helpers
@@ -61,7 +72,7 @@ export const useStoreAuth = defineStore('auth', () => {
 
   return {
     //state
-
+    userDetails,
 
     //getters
 
