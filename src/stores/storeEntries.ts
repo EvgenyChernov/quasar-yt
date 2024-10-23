@@ -6,7 +6,8 @@ import {collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebas
 import {db} from "src/firebase/firebase"
 
 // const entriesCollectionRef = collection(db, "users", 'xGV6k98LkaRoYJWhUhLsMXKxiTs2', 'entries')
-let entriesCollectionRef = null
+let entriesCollectionRef = null,
+  getEntriesSnapshot = null
 
 export const useStoreEntries = defineStore('entries', () => {
 
@@ -94,7 +95,7 @@ export const useStoreEntries = defineStore('entries', () => {
 
   const loadEntries = async () => {
     entriesLoaded.value = false
-    const unsubscribe = onSnapshot(entriesCollectionRef, (querySnapshot) => {
+    getEntriesSnapshot = onSnapshot(entriesCollectionRef, (querySnapshot) => {
       let entriesFB = []
 
       querySnapshot.forEach((doc) => {
@@ -106,12 +107,11 @@ export const useStoreEntries = defineStore('entries', () => {
       entriesLoaded.value = true
     });
 
-    // отключение прослушивания данных
-    // unsubscribe()
   }
 
-  const clearEntries = () => {
+  const clearAndStopEntries = () => {
     entries.value = []
+    if(getEntriesSnapshot) getEntriesSnapshot()
   }
 
   const addEntry = async addEntryForm => {
@@ -196,7 +196,7 @@ export const useStoreEntries = defineStore('entries', () => {
     //actions
     init,
     loadEntries,
-    clearEntries,
+    clearEntries: clearAndStopEntries,
     addEntry,
     deleteEntry,
     updateEntry,
