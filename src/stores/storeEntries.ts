@@ -93,8 +93,8 @@ export const useStoreEntries = defineStore('entries', () => {
   }
 
 
-  const loadEntries = async () => {
-    entriesLoaded.value = false
+  const loadEntries = async (showLoader = true) => {
+    if (showLoader) entriesLoaded.value = false
     getEntriesSnapshot = onSnapshot(entriesCollectionRef, (querySnapshot) => {
       let entriesFB = []
 
@@ -138,15 +138,19 @@ export const useStoreEntries = defineStore('entries', () => {
   const updateEntry = async (entryId, updates) => {
     await updateDoc(doc(entriesCollectionRef, entryId), updates);
   }
-  const updateEntryOrderNumbers = () => {
+
+  const updateEntryOrderNumbers = async () => {
     let currentOrder = 1
     entries.value.forEach(entry => {
       entry.order = currentOrder
       currentOrder++
     })
-    entries.value.forEach(entry => {
-      updateEntry(entry.id, {order: entry.order})
-    })
+
+    getEntriesSnapshot()
+    await Promise.all(entries.value.map(async entry => {
+      await updateEntry(entry.id, {order: entry.order})
+    }))
+    loadEntries(false)
   }
 
   const sortEnd = ({oldIndex, newIndex}) => {
