@@ -2,11 +2,12 @@ import {defineStore} from "pinia";
 import {computed, reactive, ref, watch, nextTick} from "vue";
 import {Dialog, Notify} from "quasar";
 import {useStoreAuth} from "stores/storeAuth";
-import {collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore";
+import {collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc, query, orderBy} from "firebase/firestore";
 import {db} from "src/firebase/firebase"
 
 // const entriesCollectionRef = collection(db, "users", 'xGV6k98LkaRoYJWhUhLsMXKxiTs2', 'entries')
 let entriesCollectionRef = null,
+  entriesQueryRef  = null,
   getEntriesSnapshot = null
 
 export const useStoreEntries = defineStore('entries', () => {
@@ -59,11 +60,6 @@ export const useStoreEntries = defineStore('entries', () => {
     }, 0)
   })
 
-
-  const entriesOrder = computed(() => {
-    return entries.value.sort((a, b) => a.order - b.order)
-  })
-
   const balancePaid = computed(() => {
     return entries.value.reduce((accumulator, {amount, paid}) => {
       return paid ? accumulator + amount : accumulator;
@@ -89,13 +85,14 @@ export const useStoreEntries = defineStore('entries', () => {
   const init = () => {
     const storeAuth = useStoreAuth();
     entriesCollectionRef = collection(db, "users", storeAuth.userDetails.id, 'entries')
+    entriesQueryRef = query(entriesCollectionRef, orderBy('order', ))
     loadEntries()
   }
 
 
   const loadEntries = async (showLoader = true) => {
     if (showLoader) entriesLoaded.value = false
-    getEntriesSnapshot = onSnapshot(entriesCollectionRef, (querySnapshot) => {
+    getEntriesSnapshot = onSnapshot(entriesQueryRef, (querySnapshot) => {
       let entriesFB = []
 
       querySnapshot.forEach((doc) => {
@@ -199,7 +196,6 @@ export const useStoreEntries = defineStore('entries', () => {
     //getters
     balance,
     balancePaid,
-    entriesOrder,
 
     //actions
     init,
