@@ -196,7 +196,7 @@ export const useStoreEntries = defineStore('entries', () => {
     //actions
     init,
     loadEntries,
-    clearEntries: clearAndStopEntries,
+    clearAndStopEntries,
     addEntry,
     deleteEntry,
     updateEntry,
