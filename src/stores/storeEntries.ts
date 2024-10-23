@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {computed, reactive, ref, watch, nextTick} from "vue";
-import {Notify} from "quasar";
+import {Dialog, Notify} from "quasar";
 import {useStoreAuth} from "stores/storeAuth";
 import {collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore";
 import {db} from "src/firebase/firebase"
@@ -105,13 +105,17 @@ export const useStoreEntries = defineStore('entries', () => {
       });
       entries.value = entriesFB;
       entriesLoaded.value = true
-    });
-
+    }, error => {
+      Dialog.create({
+        title: 'Ошибка: ',
+        message: error.message,
+      })
+    })
   }
 
   const clearAndStopEntries = () => {
     entries.value = []
-    if(getEntriesSnapshot) getEntriesSnapshot()
+    if (getEntriesSnapshot) getEntriesSnapshot()
   }
 
   const addEntry = async addEntryForm => {
