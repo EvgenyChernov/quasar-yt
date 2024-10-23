@@ -3,11 +3,13 @@ import {Dialog} from "quasar";
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "firebase/auth";
 import {auth} from "src/firebase/firebase";
 import {useStoreEntries} from "stores/storeEntries";
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 
 export const useStoreAuth = defineStore('auth', () => {
   //state
+
+  const authInitialized = ref(false);
 
   const userDetailsDefault = {
     id: null,
@@ -29,6 +31,7 @@ export const useStoreAuth = defineStore('auth', () => {
       router = useRouter()
 
     onAuthStateChanged(auth, (user) => {
+      authInitialized.value = true;
       if (user) {
         userDetails.id = user.uid
         userDetails.email = user.email
@@ -78,6 +81,7 @@ export const useStoreAuth = defineStore('auth', () => {
   return {
     //state
     userDetails,
+    authInitialized,
 
     //getters
 

@@ -5,7 +5,7 @@ import {useStoreAuth} from "stores/storeAuth";
 export default boot(({router}) => {
   router.beforeEach((to) => {
     const storeAuth = useStoreAuth()
-    if (!storeAuth.userDetails.id && to.path !== '/auth') {
+    if (!storeAuth.userDetails.id && to.path !== '/auth' && storeAuth.authInitialized) {
       return '/auth'
     }
     // запрет пользователю заходить в auth
