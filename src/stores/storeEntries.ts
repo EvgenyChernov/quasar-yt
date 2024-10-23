@@ -1,10 +1,12 @@
 import {defineStore} from "pinia";
 import {computed, reactive, ref, watch, nextTick} from "vue";
 import {Notify} from "quasar";
+import {useStoreAuth} from "stores/storeAuth";
 import {collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore";
 import {db} from "src/firebase/firebase"
 
-const entriesCollectionRef = collection(db, "users", 'xGV6k98LkaRoYJWhUhLsMXKxiTs2', 'entries')
+// const entriesCollectionRef = collection(db, "users", 'xGV6k98LkaRoYJWhUhLsMXKxiTs2', 'entries')
+let entriesCollectionRef = null
 
 export const useStoreEntries = defineStore('entries', () => {
 
@@ -82,6 +84,13 @@ export const useStoreEntries = defineStore('entries', () => {
 
 
   // actions
+
+  const init = () => {
+    const storeAuth = useStoreAuth();
+    entriesCollectionRef = collection(db, "users", storeAuth.userDetails.id, 'entries')
+    loadEntries()
+  }
+
 
   const loadEntries = async () => {
     entriesLoaded.value = false
@@ -181,6 +190,7 @@ export const useStoreEntries = defineStore('entries', () => {
     entriesOrder,
 
     //actions
+    init,
     loadEntries,
     addEntry,
     deleteEntry,
