@@ -110,6 +110,10 @@ export const useStoreEntries = defineStore('entries', () => {
     // unsubscribe()
   }
 
+  const clearEntries = () => {
+    entries.value = []
+  }
+
   const addEntry = async addEntryForm => {
     const newEntry = Object.assign({}, addEntryForm, {paid: false, order: generateOrderNumber()})
     await addDoc(entriesCollectionRef, newEntry);
@@ -192,6 +196,7 @@ export const useStoreEntries = defineStore('entries', () => {
     //actions
     init,
     loadEntries,
+    clearEntries,
     addEntry,
     deleteEntry,
     updateEntry,
